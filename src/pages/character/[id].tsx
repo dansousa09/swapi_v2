@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import { ICharacter } from "../../interfaces/ICharacter";
+import { ICharacter, ICharacters } from "../../interfaces/ICharacter";
 
 interface IProps {
   data: ICharacter;
@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   const res = await fetch('https://swapi.dev/api/people');
-  const data = await res.json();
+  const data: ICharacters = await res.json();
 
   const paths = []
   

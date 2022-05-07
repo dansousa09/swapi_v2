@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -6,8 +7,9 @@ const Redirect = () => {
   const router = useRouter();
   
   useEffect(() => {
+    setTimeout(() => {
     router.push("/1")
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 1000);
   }, [])
 
   return <></>;

@@ -1,25 +1,14 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { useData } from '../contexts/data'
 import { ICharacter, ICharacters } from '../interfaces/ICharacter'
 import styles from '../styles/Home.module.css'
 
 interface Props {
-  newData: ICharacters;
+  data: ICharacters;
 }
 
-const Home: NextPage<Props> = ({ newData }) => {
-
-  const { data, handleSetData } = useData();
-  console.log(data)
-
-  useEffect(() => {
-    handleSetData(newData);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newData])
+const Home: NextPage<Props> = ({ data }) => {
 
   return (
     <div className={styles.container}>
@@ -48,18 +37,18 @@ const Home: NextPage<Props> = ({ newData }) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await fetch(`https://swapi.dev/api/people?page=${params?.page}`);
-  const data = await res.json();
+  const data: ICharacters = await res.json();
 
   return {
     props: {
-      newData: data
+      data
     }
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`https://swapi.dev/api/people`);
-  const data = await res.json();
+  const data: ICharacters = await res.json();
   const paths = []
   for (let i = 0; i < data.count; i++) {
     const { count } = data;
